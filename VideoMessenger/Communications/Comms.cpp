@@ -1,11 +1,15 @@
 #include "Comms.h"
 #include <iostream>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
 
 using namespace std;
 
 //Instantiate a Communications object to network with a server.
 Comms::Comms() {
-	cout << "Comms  object instantiated ^.^" << endl;
+
+	cout << "Comms object instantiated ^.^" << endl;
 }
 
 //Connect to server

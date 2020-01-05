@@ -1,0 +1,5 @@
+
+class ImagePack {
+public:
+	ImagePack();
+};
