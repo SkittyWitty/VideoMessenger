@@ -6,4 +6,5 @@ cmake_minimum_required (VERSION 3.8)
 project ("VideoMessenger")
 
 # Include sub-projects.
-add_subdirectory ("VideoMessenger")
+add_subdirectory ("VideoMessengerServer")
+add_subdirectory("VideoMessengerClient")

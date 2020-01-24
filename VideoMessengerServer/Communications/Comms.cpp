@@ -28,13 +28,22 @@ Comms::Comms() {
 	//Do what we would like with server address info
 
 
+	//Bind to Socket
+	int s;
+	//s = socket(res->);
+
+
 	//Free the linked-list
 	freeaddrinfo(servinfo);
 }
 
-//Connect to server
+//Client has connected
 void Comms::connect() {
+	
+	//Create socket
+	 
 
+	//Bind to Socket
 }
 
 // Disconnect from server

@@ -1,4 +1,4 @@
-﻿// VideoMessenger.h : Include file for standard system include files,
+﻿// VideoMessengerServer.h : Include file for standard system include files,
 // or project specific include files.
 
 #pragma once

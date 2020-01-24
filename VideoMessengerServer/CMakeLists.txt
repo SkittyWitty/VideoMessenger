@@ -7,8 +7,8 @@ add_subdirectory(Communications)
 add_subdirectory(ImageHandling)
 
 # Add source to this project's executable.
-add_executable (VideoMessenger "VideoMessenger.cpp" "VideoMessenger.h")
+add_executable (VideoMessengerServer "VideoMessenger.cpp" "VideoMessenger.h")
 
-target_link_libraries(VideoMessenger COMMS_LIB IMAGE_HANDLING)
+target_link_libraries(VideoMessengerServer COMMS_LIB IMAGE_HANDLING)
 
 # TODO: Add tests and install targets if needed.
