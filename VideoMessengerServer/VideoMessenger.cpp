@@ -2,7 +2,7 @@
 //
 
 #include "VideoMessenger.h"
-#include "Communications/Comms.h"
+#include "ServerCommunications/ServerComms.h"
 #include "ImageHandling/ImagePack.h"
 #include <stdio.h>
 
@@ -11,7 +11,7 @@ int main() {
 	std::cout << "Hi-low" << std::endl;
 
 	ImagePack imgPack;
-	Comms comms;
+	ServerComms* serverComms =  new ServerComms();
 
  	return 0;
 }

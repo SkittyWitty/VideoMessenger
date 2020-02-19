@@ -1,4 +1,4 @@
-#include "Comms.h"
+#include "ServerComms.h"
 #include <cstring>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -7,8 +7,8 @@
 using namespace std;
 
 //Instantiate a Communications object to network with a server.
-Comms::Comms() {
-	cout << "Comms object instantiated ^.^" << endl;
+ServerComms::ServerComms() {
+	cout << "Server Communications object instantiated ^.^" << endl;
 
 	//Set up structure for connecting
 	int status;
@@ -38,7 +38,7 @@ Comms::Comms() {
 }
 
 //Client has connected
-void Comms::connect() {
+void ServerComms::connect() {
 	
 	//Create socket
 	 
@@ -47,21 +47,21 @@ void Comms::connect() {
 }
 
 // Disconnect from server
-void Comms::disconnect() {
+void ServerComms::disconnect() {
 
 }
 
 // Send message to client
-void Comms::send() {
+void ServerComms::send() {
 
 }
 
 // Receive a message for server we are connected to 
-void Comms::receive() {
+void ServerComms::receive() {
 
 }
 
-void Comms::clientToServer(string address) {
+void ServerComms::clientToServer(string address) {
 	int status;
 	struct addrinfo hints;
 	struct addrinfo* servinfo; //will point to results

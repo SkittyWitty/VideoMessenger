@@ -1,13 +1,13 @@
-#ifndef COMMS_H
-#define COMMS_H
+#ifndef SERVER_COMMS_H
+#define SERVER_COMMS_H
 
 #include <iostream>
 
 using namespace std;
 
-class Comms {
+class ServerComms {
 public:
-	Comms();
+	ServerComms();
 	void connect();
 	void disconnect();
 	void send();
