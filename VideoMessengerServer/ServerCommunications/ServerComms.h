@@ -7,28 +7,37 @@
 #include <cstring>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <signal.h>
 
 using namespace std;
-
-const string PORT = "9000";
-const int BACKLOG = 10; //Number of allowed connections
 
 class ServerComms {
 public:
 	ServerComms();
+	void startServer();
+	void getServerAddressInfo();
+	void process();
 	void connect();
 	void disconnect();
-	void send(); 
-	void receive();
 
 private:
 	//Set up structure for connecting
-	int status;
 	int socketfd, newclientfd;
-	struct addrinfo hints;
-	struct addrinfo* results;	//pointer to the results
-	socklen_t addrSize;
-	struct socketaddr_storage inAddr;
+	addrinfo hints;
+	int sockfd, new_fd;  // listen on sock_fd, new connection on new_fd
+	addrinfo *servinfo;
+	sockaddr_storage their_addr; // connector's address information
+	socklen_t addressSize;
+    struct sigaction sa;
+	char clientAddressString[INET6_ADDRSTRLEN];
+
+	//constants 
+	const int LISTENING_PORT = 9000;
+	const int BACKLOG = 10; //Number of allowed connections
+	const int YES = 1;
+
+	void processReaper();
+	void beginListening();
 };
 
 #endif

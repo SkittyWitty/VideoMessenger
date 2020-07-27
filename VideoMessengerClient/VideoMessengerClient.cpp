@@ -6,11 +6,10 @@ using namespace std;
 int main (){
 	cout << "Video Messenger Client" << endl;
 
-	ClientComms* comms = new ClientComms();
+	string ipAddress, portNum;
+	cin >> ipAddress;
 
-	string ipAddr, portNum;
-
-	cin >> ipAddr;
+	ClientComms* comms = new ClientComms(ipAddress);
 
 	return 0;
 }

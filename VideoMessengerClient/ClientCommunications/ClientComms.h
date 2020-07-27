@@ -7,5 +7,12 @@
 
 class ClientComms {
 public:
-	ClientComms(string serverAddr);
+	ClientComms(std::string serverAddr);
+
+private:
+	void printServerAddressInfo();
+	std::string serverAddress;
+	addrinfo* results;
+	int sockfd;
+	void recvData();
 };

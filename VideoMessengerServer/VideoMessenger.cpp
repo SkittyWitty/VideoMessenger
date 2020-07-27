@@ -10,8 +10,9 @@
 int main() {
 	std::cout << "Hi-low" << std::endl;
 
-	ImagePack imgPack;
-	ServerComms* serverComms =  new ServerComms();
+	//ImagePack imgPack;
+	ServerComms kk;
+	kk.startServer();
 
  	return 0;
 }
