@@ -6,6 +6,12 @@
 
 using namespace std;
 
+//constants 
+const char* LISTENING_PORT = "9000";
+const int BACKLOG = 10; //Number of allowed connections
+const int YES = 1;
+
+
 //Instantiate a Communications object to network with a server.
 ServerComms::ServerComms() {
 	cout << "Server Communications object instantiated ^.^" << endl;

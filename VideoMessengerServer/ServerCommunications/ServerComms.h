@@ -31,11 +31,6 @@ private:
     struct sigaction sa;
 	char clientAddressString[INET6_ADDRSTRLEN];
 
-	//constants 
-	const int LISTENING_PORT = 9000;
-	const int BACKLOG = 10; //Number of allowed connections
-	const int YES = 1;
-
 	void processReaper();
 	void beginListening();
 };

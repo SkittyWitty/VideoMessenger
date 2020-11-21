@@ -5,6 +5,9 @@ cmake_minimum_required (VERSION 3.8)
 
 project ("VideoMessenger")
 
-# Include sub-projects.
+enable_testing()
+
+# Include sub-projects.\
+add_subdirectory("external/google-test")
 add_subdirectory ("VideoMessengerServer")
 add_subdirectory("VideoMessengerClient")
