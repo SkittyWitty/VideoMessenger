@@ -10,13 +10,17 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-const int PORT = 9000; // the port client will be connecting to 
+const char* PORT = "9000"; // the port client will be connecting to 
 const int GET_ADDRESS_ERROR = 0;
 const int MAX_DATA_SIZE = 100; // max number of bytes we can get at once 
 
 using namespace std;
 
 ClientComms::ClientComms(string serverAddress) {
+	this->serverAddress = serverAddress;
+}
+
+void ClientComms::connectToSocket() {
 	std::cout << "Starting client-side communication" << std::endl;
 
 	struct addrinfo hints;
@@ -28,8 +32,8 @@ ClientComms::ClientComms(string serverAddress) {
 
 	const char* sa = serverAddress.c_str();
 	this->serverAddress = serverAddress;
-	status = getaddrinfo(sa, NULL, &hints, &results);
-	
+	status = getaddrinfo(sa, PORT, &hints, &results);
+
 	if (status != 0) {
 		cout << "Oh no looks like there were some issues >.<" << endl;
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
@@ -42,14 +46,26 @@ ClientComms::ClientComms(string serverAddress) {
 	//Initialize socket
 	sockfd = socket(results->ai_family, results->ai_socktype, results->ai_protocol);
 
+	if (sockfd == -1) {
+		perror("client: socket");
+		return;
+	}
+
 	//Connect
 	int connectionStatus = connect(sockfd, results->ai_addr, results->ai_addrlen);
 
 	if (connectionStatus == -1) {
 		cout << "There was an error with connecting: " << gai_strerror(errno) << endl;
+		close(sockfd);
+		return;
 	}
 	else {
 		cout << "Connection successful!" << endl;
+	}
+
+	if (results == NULL) {
+		fprintf(stderr, "client: failed to connect\n");
+		return;
 	}
 }
 

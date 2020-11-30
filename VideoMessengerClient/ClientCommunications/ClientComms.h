@@ -8,6 +8,7 @@
 class ClientComms {
 public:
 	ClientComms(std::string serverAddr);
+	void connectToSocket();
 
 private:
 	void printServerAddressInfo();
