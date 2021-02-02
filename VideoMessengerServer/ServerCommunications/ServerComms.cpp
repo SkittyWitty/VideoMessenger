@@ -121,6 +121,10 @@ void ServerComms::processReaper() {
 }
 
 void ServerComms::process() {
+	std::string str = "Hello yesh dis is Min-slice.";
+	const char* message = str.c_str();
+	printf("Size of string: %d\n", str.length());
+
 	printf("server: waiting for connections...\n");
 	int new_fd;
 
@@ -139,8 +143,9 @@ void ServerComms::process() {
 
 		if (!fork()) { // this is the child process
 			close(sockfd); // child doesn't need the listener
-			if (send(new_fd, "Hello yesh dis is Min-slice.", 13, 0) == -1)
+			if (send(new_fd, message, str.length(), 0) == -1) {
 				perror("send");
+			}
 			close(new_fd);
 			exit(0);
 		}

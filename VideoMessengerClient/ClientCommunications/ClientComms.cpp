@@ -26,7 +26,7 @@ void ClientComms::connectToSocket() {
 	struct addrinfo hints;
 	int status;
 
-	memset(&hints, 0, sizeof hints); //Ensure structure is clear
+	memset(&hints, 0, sizeof(hints)); //Ensure structure is clear
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 
@@ -61,6 +61,15 @@ void ClientComms::connectToSocket() {
 	}
 	else {
 		cout << "Connection successful!" << endl;
+		char buf[MAX_DATA_SIZE];
+		if (recv(sockfd, buf, MAX_DATA_SIZE, 0) > 0) {
+			buf[MAX_DATA_SIZE] = '\0';
+
+			printf("client: received '%s'\n", buf);
+		}
+		else {
+			perror("recv");
+		}
 	}
 
 	if (results == NULL) {
