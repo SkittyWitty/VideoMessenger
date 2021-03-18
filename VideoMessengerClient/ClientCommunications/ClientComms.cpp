@@ -1,14 +1,17 @@
 #include "ClientComms.h"
-#include <arpa/inet.h>
+
+//Standard library includes
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <errno.h>
 #include <string.h>
-#include <netdb.h>
-#include <sys/types.h>
+
+//Unix based OS specific includes
+#ifdef unix
+#include <arpa/inet.h>
+#include <unistd.h>
 #include <netinet/in.h>
-#include <sys/socket.h>
+#endif
 
 const char* PORT = "9000"; // the port client will be connecting to 
 const int GET_ADDRESS_ERROR = 0;
@@ -22,6 +25,17 @@ ClientComms::ClientComms(string serverAddress) {
 
 void ClientComms::connectToSocket() {
 	std::cout << "Starting client-side communication" << std::endl;
+
+#ifdef _WIN32
+	WSADATA wsaData;
+	int iResult;
+
+	// Initialize Winsock
+	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	if (iResult != 0) {
+		printf("WSAStartup failed: %d\n", iResult);
+	}
+#endif
 
 	struct addrinfo hints;
 	int status;
@@ -46,24 +60,43 @@ void ClientComms::connectToSocket() {
 	//Initialize socket
 	sockfd = socket(results->ai_family, results->ai_socktype, results->ai_protocol);
 
+#ifdef _WIN32
+	if (sockfd == INVALID_SOCKET) {
+		printf("Error at socket(): %ld\n", WSAGetLastError());
+		freeaddrinfo(results);
+		WSACleanup();
+		return;
+	}
+#else
 	if (sockfd == -1) {
 		perror("client: socket");
 		return;
 	}
+#endif
 
 	//Connect
 	int connectionStatus = connect(sockfd, results->ai_addr, results->ai_addrlen);
-
+#ifdef _WIN32
+	if (connectionStatus == SOCKET_ERROR) {
+		closesocket(sockfd);
+		sockfd = INVALID_SOCKET;
+		printf("Unable to connect to server!\n");
+		freeaddrinfo(results);
+		WSACleanup();
+		return;
+	}
+#else
 	if (connectionStatus == -1) {
 		cout << "There was an error with connecting: " << gai_strerror(errno) << endl;
 		close(sockfd);
 		return;
 	}
+#endif
 	else {
 		cout << "Connection successful!" << endl;
 		char buf[MAX_DATA_SIZE];
 		if (recv(sockfd, buf, MAX_DATA_SIZE, 0) > 0) {
-			buf[MAX_DATA_SIZE] = '\0';
+			buf[MAX_DATA_SIZE-1] = '\0';
 
 			printf("client: received '%s'\n", buf);
 		}
@@ -104,6 +137,9 @@ void ClientComms::recvData() {
 	buf[numbytes] = '\0';
 
 	printf("client: received '%s'\n", buf);
-
+#ifdef _WIN32
+	WSACleanup();
+#else
 	close(sockfd);
+#endif
 }	

@@ -1,6 +1,10 @@
 #include "VideoMessengerClient.h"
 #include "ClientCommunications/ClientComms.h"
-#include <unistd.h>
+
+//Used for OS neutral timing mechanisms
+#include <chrono>
+#include <thread>
+
 
 using namespace std;
 
@@ -13,7 +17,8 @@ int main (){
 	ClientComms* comms = new ClientComms(ipAddress);
 	comms->connectToSocket();
 
-	usleep(10000);
+	chrono::milliseconds timespan(10000); 
+	this_thread::sleep_for(timespan);
 
 	return 0;
 }
